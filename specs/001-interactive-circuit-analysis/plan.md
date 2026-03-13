@@ -1,104 +1,97 @@
-# Implementation Plan: [FEATURE]
+# 實作計畫：響應式互動學習電路分析
 
-**Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
-**Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
+**分支**：`001-interactive-circuit-analysis` | **日期**：2026-03-13 | **規格**：[spec.md](spec.md)  
+**輸入**：功能規格來自 `/specs/001-interactive-circuit-analysis/spec.md`
 
-**Note**: This template is filled in by the `/speckit.plan` command. See `.specify/templates/plan-template.md` for the execution workflow.
+## 摘要
 
-## Summary
+本功能建立一個響應式、互動式的電路分析學習平台，讓學生能夠在瀏覽器中組裝電路、即時模擬直流分析結果，並透過有引導的課程與練習題提升電路分析能力。採用靜態單頁應用（SPA）架構，可部署於 GitHub Pages，無需後端伺服器。電路求解採用改良節點分析法（MNA），畫布渲染採用 SVG，進度資料持久化至 localStorage。
 
-[Extract from feature spec: primary requirement + technical approach from research]
+## 技術背景
 
-## Technical Context
+**語言／版本**：TypeScript 5.x  
+**主要依賴**：Vite 5（建置工具）、React 18（UI 框架）、math.js（矩陣運算，支援 MNA 線性方程組）  
+**儲存**：localStorage（客戶端進度持久化，無需伺服器）  
+**測試**：Vitest + React Testing Library  
+**目標平台**：瀏覽器靜態 SPA，可部署至 GitHub Pages  
+**專案類型**：網頁應用（靜態前端 SPA）  
+**效能目標**：電路計算更新 < 1 秒（SC-002）；初次頁面互動 < 3 秒（一般 4G 連線）  
+**限制**：無伺服器依賴、響應式支援 320–2560 px、支援觸控操作（FR-013、FR-014）  
+**規模／範圍**：~10 課程、~20 練習題；最多 50 個元件／畫布（邊界限制）
 
-<!--
-  ACTION REQUIRED: Replace the content in this section with the technical details
-  for the project. The structure here is presented in advisory capacity to guide
-  the iteration process.
--->
+## 憲法檢查
 
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
-**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
-**Project Type**: [e.g., library/cli/web-service/mobile-app/compiler/desktop-app or NEEDS CLARIFICATION]  
-**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
-**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
-**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
+*關卡：Phase 0 研究前必須通過。Phase 1 設計後再次檢查。*
 
-## Constitution Check
+| 原則 | Phase 0 狀態 | Phase 1 狀態（設計後） | 說明 |
+|------|------------|-------------------|------|
+| I. 繁體中文優先 | ✅ | ✅ | 所有規格、計畫、研究、合約文件均以繁體中文撰寫 |
+| II. 簡約設計 | ✅ | ✅ | Vite + React + math.js + Zustand；無不必要依賴；MNA 最小實作 |
+| III. 精簡文檔 | ✅ | ✅ | 僅建立 speckit 工作流程所需文件 |
+| IV. Git 流程紀律 | ✅ | ✅ | 每個階段結束後提交；工作目錄保持乾淨 |
+| V. 測試驅動開發 | ✅ | ✅ | contracts/ 已定義測試案例；tasks.md 測試任務排在實作之前 |
+| VI. 任務追蹤 | ✅ | ✅ | tasks.md 打勾機制；每次提交同步更新 |
+| VII. 規格保護 | ✅ | ✅ | Vite 初始化至 `frontend/` 子目錄；quickstart.md 有明確驗證步驟 |
+| VIII. 靜態網站優先 | ✅ | ✅ | 純前端 SPA；localStorage 持久化；可部署至 GitHub Pages |
 
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+**Phase 1 後結論**：所有原則均通過，無需填寫複雜度追蹤。
 
-[Gates determined based on constitution file]
+## 專案結構
 
-## Project Structure
-
-### Documentation (this feature)
+### 文件（本功能）
 
 ```text
-specs/[###-feature]/
-├── plan.md              # This file (/speckit.plan command output)
-├── research.md          # Phase 0 output (/speckit.plan command)
-├── data-model.md        # Phase 1 output (/speckit.plan command)
-├── quickstart.md        # Phase 1 output (/speckit.plan command)
-├── contracts/           # Phase 1 output (/speckit.plan command)
-└── tasks.md             # Phase 2 output (/speckit.tasks command - NOT created by /speckit.plan)
+specs/001-interactive-circuit-analysis/
+├── plan.md              # 本檔案（/speckit.plan 輸出）
+├── research.md          # Phase 0 輸出（/speckit.plan）
+├── data-model.md        # Phase 1 輸出（/speckit.plan）
+├── quickstart.md        # Phase 1 輸出（/speckit.plan）
+├── contracts/           # Phase 1 輸出（/speckit.plan）
+│   ├── circuit-engine.md
+│   ├── storage-schema.md
+│   └── ui-contracts.md
+└── tasks.md             # Phase 2 輸出（由 /speckit.tasks 建立）
 ```
 
-### Source Code (repository root)
-<!--
-  ACTION REQUIRED: Replace the placeholder tree below with the concrete layout
-  for this feature. Delete unused options and expand the chosen structure with
-  real paths (e.g., apps/admin, packages/something). The delivered plan must
-  not include Option labels.
--->
+### 原始碼（儲存庫根目錄）
 
 ```text
-# [REMOVE IF UNUSED] Option 1: Single project (DEFAULT)
-src/
-├── models/
-├── services/
-├── cli/
-└── lib/
-
-tests/
-├── contract/
-├── integration/
-└── unit/
-
-# [REMOVE IF UNUSED] Option 2: Web application (when "frontend" + "backend" detected)
-backend/
-├── src/
-│   ├── models/
-│   ├── services/
-│   └── api/
-└── tests/
-
 frontend/
+├── index.html
+├── vite.config.ts
+├── tsconfig.json
+├── package.json
 ├── src/
+│   ├── main.tsx
+│   ├── App.tsx
 │   ├── components/
-│   ├── pages/
-│   └── services/
+│   │   ├── canvas/          # 電路畫布（SVG 渲染）
+│   │   ├── palette/         # 元件選擇面板
+│   │   ├── lesson/          # 課程步驟面板
+│   │   ├── exercise/        # 練習題面板
+│   │   └── dashboard/       # 學習進度儀表板
+│   ├── engine/
+│   │   ├── mna.ts           # 改良節點分析（Modified Nodal Analysis）
+│   │   ├── solver.ts        # 電路求解器入口
+│   │   └── units.ts         # SI 單位前綴處理
+│   ├── data/
+│   │   ├── lessons/         # 課程 JSON 資料檔
+│   │   └── exercises/       # 練習題 JSON 資料檔
+│   ├── store/
+│   │   ├── circuitStore.ts  # 電路畫布狀態（Zustand）
+│   │   ├── lessonStore.ts   # 課程進度狀態
+│   │   └── progressStore.ts # 整體學習進度
+│   └── utils/
+│       └── storage.ts       # localStorage 存取工具
 └── tests/
-
-# [REMOVE IF UNUSED] Option 3: Mobile + API (when "iOS/Android" detected)
-api/
-└── [same as backend above]
-
-ios/ or android/
-└── [platform-specific structure: feature modules, UI flows, platform tests]
+    ├── unit/
+    │   ├── engine/          # 電路求解器單元測試
+    │   └── utils/           # 工具函數測試
+    ├── integration/
+    │   ├── canvas/          # 畫布互動整合測試
+    │   └── lesson/          # 課程流程整合測試
+    └── contract/
+        └── storage/         # localStorage 合約測試
 ```
 
-**Structure Decision**: [Document the selected structure and reference the real
-directories captured above]
-
-## Complexity Tracking
-
-> **Fill ONLY if Constitution Check has violations that must be justified**
-
-| Violation | Why Needed | Simpler Alternative Rejected Because |
-|-----------|------------|-------------------------------------|
-| [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
-| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
+**結構決策**：採用 Web 應用前端子目錄結構，後端不存在（靜態 SPA）。`frontend/` 子目錄確保 Vite 初始化時不影響 `specs/` 目錄（遵循憲法原則 VII）。狀態管理採用 Zustand（輕量，無 Redux 樣板代碼）。
