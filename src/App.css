@@ -1,0 +1,29 @@
+.nav {
+  display: flex;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: #1a1a2e;
+  border-bottom: 2px solid #e94560;
+}
+
+.nav a {
+  color: #eee;
+  text-decoration: none;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.nav a:hover,
+.nav a.active {
+  background: #e94560;
+  color: white;
+}
+
+.page {
+  padding: 2rem;
+}
+
+main {
+  min-height: calc(100vh - 60px);
+}
