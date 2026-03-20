@@ -1,0 +1,26 @@
+{
+  "id": "kvl",
+  "title": "克希荷夫電壓定律 (KVL)",
+  "description": "學習任何閉合迴路中電壓的總和等於零",
+  "difficulty": "beginner",
+  "estimatedMinutes": 15,
+  "tags": ["KVL", "電路定律", "DC"],
+  "steps": [
+    {
+      "id": "step-1",
+      "type": "instruction",
+      "title": "克希荷夫電壓定律",
+      "content": "克希荷夫電壓定律（KVL）指出：在任何閉合迴路中，所有電壓的代數和等於零。\n\n∑V = 0\n\n這意味著電源提供的電壓等於所有電阻消耗的電壓總和。在一個有 12V 電源和兩個電阻的串聯電路中，兩個電阻的電壓降之和等於 12V。"
+    },
+    {
+      "id": "step-2",
+      "type": "quiz",
+      "title": "KVL 計算",
+      "content": "在一個串聯電路中，電壓源為 12V，電阻 R1 = 4Ω，電阻 R2 = 8Ω。",
+      "question": "電阻 R1 兩端的電壓降是多少伏特（V）？",
+      "answer": 4,
+      "tolerance": 0.05,
+      "hint": "先求電流：I = V/(R1+R2) = 12/12 = 1A，再求 V_R1 = I × R1 = 1 × 4 = 4V"
+    }
+  ]
+}

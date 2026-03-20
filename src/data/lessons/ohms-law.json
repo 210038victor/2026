@@ -1,0 +1,26 @@
+{
+  "id": "ohms-law",
+  "title": "歐姆定律",
+  "description": "學習電壓、電流、電阻之間的基本關係 V = IR",
+  "difficulty": "beginner",
+  "estimatedMinutes": 10,
+  "tags": ["基礎", "歐姆定律", "DC"],
+  "steps": [
+    {
+      "id": "step-1",
+      "type": "instruction",
+      "title": "什麼是歐姆定律？",
+      "content": "歐姆定律描述了電壓（V）、電流（I）和電阻（R）之間的關係：\n\nV = I × R\n\n其中：\n• V 是電壓，單位為伏特（V）\n• I 是電流，單位為安培（A）\n• R 是電阻，單位為歐姆（Ω）\n\n這意味著通過電阻的電流等於電阻兩端電壓除以電阻值。"
+    },
+    {
+      "id": "step-2",
+      "type": "quiz",
+      "title": "應用歐姆定律",
+      "content": "假設有一個電路，電壓源提供 10V，電阻為 5Ω。",
+      "question": "通過電阻的電流是多少安培（A）？請輸入數字。",
+      "answer": 2,
+      "tolerance": 0.05,
+      "hint": "使用公式 I = V / R = 10 / 5"
+    }
+  ]
+}

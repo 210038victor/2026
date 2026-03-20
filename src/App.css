@@ -1,0 +1,101 @@
+* {
+  box-sizing: border-box;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  height: 52px;
+  background: #1e293b;
+  color: white;
+  flex-shrink: 0;
+  gap: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.app-logo {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #f8fafc;
+  white-space: nowrap;
+}
+
+.app-nav {
+  display: flex;
+  gap: 4px;
+}
+
+.app-nav a {
+  padding: 6px 12px;
+  border-radius: 6px;
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+
+.app-nav a:hover {
+  color: white;
+  background: rgba(255,255,255,0.1);
+}
+
+.app-nav a.active {
+  color: white;
+  background: rgba(255,255,255,0.15);
+}
+
+.app-main {
+  flex: 1;
+  overflow: auto;
+  background: #f1f5f9;
+}
+
+.canvas-page {
+  display: flex;
+  height: 100%;
+  gap: 0;
+}
+
+.sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  background: white;
+  border-right: 1px solid #e2e8f0;
+}
+
+.canvas-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .canvas-page {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    height: auto;
+    flex-shrink: 0;
+  }
+}
