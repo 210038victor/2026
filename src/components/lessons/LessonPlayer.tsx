@@ -14,8 +14,7 @@ export function LessonPlayer() {
     if (id && currentLessonId !== id) {
       startLesson(id);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [id, currentLessonId, startLesson]);
 
   if (!lesson) {
     return (
